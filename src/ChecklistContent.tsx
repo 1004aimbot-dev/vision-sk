@@ -21,10 +21,11 @@ interface ChecklistContentProps {
     isViewMode: boolean;
     onDataChange?: (newData: ChecklistData) => void;
     forceDesktop?: boolean; // New prop to force desktop layout for image capture
+    idPrefix?: string; // Prefix to avoid name collisions between visible and hidden forms
 }
 
 export const ChecklistContent = React.forwardRef<HTMLDivElement, ChecklistContentProps>(
-    ({ data, isViewMode, onDataChange, forceDesktop = false }, ref) => {
+    ({ data, isViewMode, onDataChange, forceDesktop = false, idPrefix = '' }, ref) => {
 
         const handleItemChange = (id: string, field: keyof ChecklistItem, value: string) => {
             if (!onDataChange) return;
@@ -189,14 +190,14 @@ export const ChecklistContent = React.forwardRef<HTMLDivElement, ChecklistConten
                                                         <label key={statusOption} className="flex items-center gap-1 cursor-pointer">
                                                             <input
                                                                 type="radio"
-                                                                name={`status-${item.id}`}
+                                                                name={`${idPrefix}status-${item.id}`}
                                                                 value={statusOption}
                                                                 checked={item.status === statusOption}
                                                                 onChange={(e) => handleItemChange(item.id, 'status', e.target.value as any)}
-                                                                disabled={isViewMode}
-                                                                className="accent-blue-600 scale-90 md:scale-100"
+                                                                // Don't use disabled prop in view mode to avoid graying out. Use pointer-events-none instead.
+                                                                className={`accent-black scale-90 md:scale-100 ${isViewMode ? 'pointer-events-none' : ''}`}
                                                             />
-                                                            <span className={`text-xs md:text-sm whitespace-nowrap ${item.status === statusOption ? 'font-bold' : ''}`}>
+                                                            <span className={`text-xs md:text-sm whitespace-nowrap ${item.status === statusOption ? 'font-extrabold text-black' : 'text-gray-600'}`}>
                                                                 {statusOption}
                                                             </span>
                                                         </label>
@@ -231,6 +232,16 @@ export const ChecklistContent = React.forwardRef<HTMLDivElement, ChecklistConten
                                 </tbody>
                             </table>
                         </div>
+
+                        {/* Add Item Button */}
+                        {!isViewMode && (
+                            <button
+                                onClick={handleAddItem}
+                                className="w-full py-3 mt-2 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-blue-500 hover:text-blue-500 flex items-center justify-center gap-2 transition-colors print:hidden"
+                            >
+                                <IconPlus /> 항목 추가하기
+                            </button>
+                        )}
 
                         {/* Signature Section - ALWAYS Visible in Print, Conditional in View */}
                         <div className={`mt-12 flex justify-end ${isViewMode ? 'flex' : 'print:flex hidden'}`}>

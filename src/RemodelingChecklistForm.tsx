@@ -131,6 +131,7 @@ const RemodelingChecklistForm: React.FC = () => {
                 data={data}
                 isViewMode={isViewMode}
                 onDataChange={setData}
+                idPrefix="visible-"
             />
 
             {/* Hidden Form Sheet (For Image Capture) */}
@@ -153,6 +154,7 @@ const RemodelingChecklistForm: React.FC = () => {
                     data={data}
                     isViewMode={true} // Always view mode for capture
                     forceDesktop={true} // Force A4 desktop layout for image capture
+                    idPrefix="hidden-"
                 />
             </div>
         </div>
