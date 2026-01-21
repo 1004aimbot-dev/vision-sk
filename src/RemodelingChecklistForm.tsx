@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { toBlob } from 'html-to-image';
 import { ChecklistContent } from './ChecklistContent';
-import type { ChecklistData, ChecklistItem } from './ChecklistContent';
+import type { ChecklistData } from './ChecklistContent';
 
 const RemodelingChecklistForm: React.FC = () => {
     const [data, setData] = useState<ChecklistData>(() => {

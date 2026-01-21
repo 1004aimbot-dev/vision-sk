@@ -60,12 +60,7 @@ export const ChecklistContent = React.forwardRef<HTMLDivElement, ChecklistConten
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
         );
 
-        // Helper to conditionally apply classes based on forceDesktop
-        // If forceDesktop is true, we ignore mobile classes and use desktop defaults
-        const responsiveClass = (mobile: string, desktop: string) => {
-            if (forceDesktop) return desktop;
-            return `${mobile} md:${desktop}`; // Mobile first, then desktop on md screen
-        };
+
 
         return (
             <div ref={ref} className="bg-white">
